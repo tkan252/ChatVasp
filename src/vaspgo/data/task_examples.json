@@ -1,0 +1,180 @@
+{
+    "Sturcture Optimization Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        }
+    ],
+    "Density of States (DOS) Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "SCF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "NSCF for DOS",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy",
+                "FROM SCF Calculation: WAVECAR, type: softlink",
+                "FROM SCF Calculation: CHGCAR, type: softlink"
+            ],
+            "Special Requirements": "ICHARG=11, NEDOS=2000, denser k-mesh"
+        }
+    ],
+    "GGA(PBE) Band Structure Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "SCF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "NSCF for Band Structure",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy",
+                "FROM Structure Relaxation: WAVECAR, type: softlink",
+                "FROM Structure Relaxation: CHGCAR, type: softlink"
+            ],
+            "Special Requirements": "ICHARG=11, Same functional as SCF Calculation"
+        }
+    ],
+    "HSE06 Band Structure Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "SCF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy",
+                "FROM Structure Relaxation: WAVECAR, type: copy"
+            ],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "HSE06 for Band Structure",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy",
+                "FROM Structure Relaxation: WAVECAR, type: softlink"
+            ],
+            "Special Requirements": "ICHARG!=11 is very IMPORTANT"
+        }
+    ],
+    "Phonon Calculation (DFPT)": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "SCF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "Expand Cell",
+            "Precision Level": "null",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": "use phonopy -d --dim {x} {y} {z} to expand the cell of POSCAR to SPOSCAR"
+        },
+        {
+            "Task Name": "DFPT Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Expand Cell: SPOSCAR to POSCAR, type: copy",
+                "FROM SCF Calculation: WAVECAR, type: softlink",
+                "FROM SCF Calculation: CHGCAR, type: softlink"
+            ],
+            "Special Requirements": ""
+        }
+    ],
+    "electron localization function (ELF) Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "ELF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": "LELF=.TRUE."
+        }
+    ],
+    "work function Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "Work Function Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": "LVHAR=.TRUE., LDIPOL=.TRUE., IDIPOL=3"
+        }
+    ],
+    "optical properties Calculation / dielectric function Calculation": [
+        {
+            "Task Name": "Structure Relaxation",
+            "Precision Level": "medium",
+            "Dependencies": [],
+            "Special Requirements": ""
+        },
+        {
+            "Task Name": "SCF Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy"
+            ],
+            "Special Requirements": "LWAVE=.TRUE., LCHARG=.TRUE."
+        },
+        {
+            "Task Name": "Optical Calculation",
+            "Precision Level": "high",
+            "Dependencies": [
+                "FROM Structure Relaxation: CONTCAR to POSCAR, type: copy",
+                "FROM SCF Calculation: WAVECAR, type: softlink",
+                "FROM SCF Calculation: CHGCAR, type: softlink"
+            ],
+            "Special Requirements": "ISTART=1, ICHARG=1, LOPTICS=.TRUE."
+        }
+    ]
+}

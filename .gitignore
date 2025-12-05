@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.env
+.venv
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# VASP output files
+*.out
+*.log
+*.err
+CHG
+CHGCAR
+CONTCAR
+DOSCAR
+EIGENVAL
+OSZICAR
+WAVECAR
+XDATCAR
+vasprun.xml
+OUTCAR
+
+# Temporary files
+*.tmp
+*.bak
+test/
